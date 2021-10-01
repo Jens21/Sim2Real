@@ -1,3 +1,5 @@
+*BACHELOR THESIS 2021*
+
 This project is my bachelor thesis.
 
 It uses the FFB6D network to estimate the poses of the YCB Video Dataset images.
