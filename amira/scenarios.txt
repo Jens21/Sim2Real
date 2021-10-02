@@ -1,1 +1,2 @@
-scenario_1: Every scene has between 6 to 14 images
+scenario_1: Every scene has between 4 to 7 images
+scenario_2: Every scene has between 6 to 14 images
