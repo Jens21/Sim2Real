@@ -1,0 +1,253 @@
+PandaTable (on top of general dataset configurations, ust for PandaTable)
+
+"""
+This file implements generation of datasets for the Panda Table scenario. The
+file depends on a suitable panda table blender file such as
+robottable_empty.blend in $AMIRA_DATA_GFX.
+"""
+
+[scene_setup]
+        # specific scene configuration
+        self.add_param('scene_setup.blend_file', '~/gfx/modeling/robottable_empty.blend',
+                       'Path to .blend file with modeled scene')
+        self.add_param('scene_setup.environment_textures', '$AMIRA_DATASETS/OpenImagesV4/Images',
+                       'Path to background images / environment textures')
+        self.add_param('scene_setup.cameras',
+                       ['Camera', 'StereoCamera.Left', 'StereoCamera.Right', 'Camera.FrontoParallel.Left',
+                        'Camera.FrontoParallel.Right'], 'Cameras to render')
+        self.add_param('scene_setup.forward_frames', 25, 'Number of frames in physics forward-simulation')
+
+
+[scenario_setup]
+        # scenario: target objects
+        self.add_param('scenario_setup.target_objects', [],
+                       'List of objects to drop in the scene for which annotated info are stored')
+        self.add_param('scenario_setup.distractor_objects', [],
+                       'List of objects to drop in the scene for which info are NOT stored'
+                       'List of objects visible in the scene but of which infos are not stored')
+        self.add_param('scenario_setup.textured_objects', [],
+                       'List of objects whose texture is randomized during rendering')
+        self.add_param('scenario_setup.objects_textures', '', 'Path to images for object textures')
+
+
+[multiview_setup]
+        # multiview configuration (if implemented)
+        self.add_param('multiview_setup.mode', '',
+                       'Selected mode to generate view points, i.e., random, bezier, viewsphere')
+        self.add_param('multiview_setup.mode_config', Configuration(), 'Mode specific configuration')
+        self.add_param('multiview_setup.offset', True,
+                       'If False, multi views are not offset with initial camera location. Default: True')
+
+[debug]  
+        # specific debug config
+        self.add_param('debug.plot', False, 'If True, in debug mode, enable simple visual debug')
+        self.add_param('debug.plot_axis', False, 'If True, in debug-plot mode, plot camera coordinate systems')
+        self.add_param('debug.scatter', False, 'If True, in debug mode-plot, enable scatter plot')
+        self.add_param('debug.save_to_blend', False, 'If True, in debug mode, log to .blend files')
+
+
+SimpleObject (on top of general dataset configurations, ust for SimpleObject)
+
+    """Simple scene with a single object in which we have three point lighting and can set
+    some background image.
+    """
+
+[scene_setup]
+	self.add_param('scene_setup.environment_textures',
+                       '$AMIRA_DATASETS/OpenImagesV4/Images',
+                       'Path to background images / environment textures')
+
+[scenario_setup]
+        self.add_param('scenario_setup.target_object', 'Tool.Cap', 'Define single target object to render')
+        self.add_param('scenario_setup.object_material', 'metal', 'Select object material ["plastic", "metal"]')
+
+
+
+StaticScene (on top of general dataset configurations, ust for StaticScene)
+
+"""
+This file implements generation of datasets from "static" scenes. That is scene where
+no dynamic simulation is performed.
+
+Differently from dynamical scenes, this foresees all the desired objects already loaded
+in the scene. For this to work, the selected target objects in the config must match
+those in the loaded blender file. These are not actively used for simulation
+but to correctly write data to file.
+"""
+
+[scene_setup]
+	# specific scene configuration
+        self.add_param('scene_setup.blend_file', '~/gfx/modeling/robottable_empty.blend',
+                       'Path to .blend file with modeled scene')
+        self.add_param('scene_setup.environment_textures', '$AMIRA_DATASETS/OpenImagesV4/Images',
+                       'Path to background images / environment textures')
+        self.add_param('scene_setup.cameras',
+                       ['Camera', 'StereoCamera.Left', 'StereoCamera.Right', 'Camera.FrontoParallel.Left',
+                        'Camera.FrontoParallel.Right'], 'Cameras to render')
+
+[scenario_setup]
+	# scenario: target objects
+        self.add_param('scenario_setup.target_objects', [],
+                       'List of objects to drop in the scene for which annotated info are stored')
+        self.add_param('scenario_setup.textured_objects', [],
+                       'List of objects whose texture is randomized during rendering')
+        self.add_param('scenario_setup.objects_textures', '', 'Path to images for object textures')
+
+[multiview_setup]
+	# multiview configuration (if implemented)
+        self.add_param('multiview_setup.mode', '',
+                       'Selected mode to generate view points, i.e., random, bezier, viewsphere')
+        self.add_param('multiview_setup.mode_config', Configuration(), 'Mode specific configuration')
+        self.add_param('multiview_setup.offset', True,
+                       'If False, multi views are not offset with initial camera location. Default: True')
+   
+[debug]     
+	# specific debug config
+        self.add_param('debug.plot', False, 'If True, in debug mode, enable simple visual debug')
+        self.add_param('debug.plot_axis', False, 'If True, in debug-plot mode, plot camera coordinate systems')
+        self.add_param('debug.scatter', False, 'If True, in debug mode-plot, enable scatter plot')
+        self.add_param('debug.save_to_blend', False, 'If True, in debug mode, log to .blend files')
+
+
+WorkstationScenarios (on top of general dataset configurations, just for WorkstationScenarios )
+
+"""
+This file implements generation of datasets for workstation scenarios. The file
+depends on a suitable workstation scenarion blender file such as
+worstationscenarios.blend.
+"""
+
+[scene_setup]
+        self.add_param('scene_setup.blend_file', '$AMIRA_DATA_GFX/modeling/workstation_scenarios.blend',
+                       'Path to .blend file with modeled scene')
+        self.add_param('scene_setup.environment_textures', '$AMIRA_DATASETS/OpenImagesV4/Images',
+                       'Path to background images / environment textures')
+        self.add_param('scene_setup.cameras', ['CameraLeft', 'Camera', 'CameraRight'], 'Cameras to render')
+        self.add_param('scene_setup.forward_frames', 15, 'Number of frames in physics forward-simulation')
+
+[scenario_setup]
+        # specific scenario configuration
+        self.add_param('scenario_setup.scenario', 0, 'Scenario to render')
+        self.add_param('scenario_setup.target_objects', [],
+                       'List of objects to drop in the scene for which annotated info are stored')
+        self.add_param('scenario_setup.distractor_objects', [],
+                       'List of objects to drop in the scene for which info are NOT stored')
+        self.add_param('scenario_setup.abc_objects', [], 'List of all ABC-Dataset objects to drop in environment')
+        self.add_param('scenario_setup.num_abc_colors', 3, 'Number of random metallic materials to generate')
+
+[multiview_setup]
+        # multiview configuration (if implemented)
+        self.add_param('multiview_setup.mode', '',
+                       'Selected mode to generate view points, i.e., random, bezier, viewsphere')
+					   
+_______________________________________________________________________________
+
+		'random': {
+            'base_location': get_array_from_str(mode_cfg, 'base_location', np.zeros(3)),
+            'scale': float(mode_cfg.get('scale', 1))
+        },
+        'bezier': {
+            'p0': get_array_from_str(mode_cfg, 'p0', np.zeros(3)),
+            'p1': get_array_from_str(mode_cfg, 'p1', np.random.randn(3)),
+            'p2': get_array_from_str(mode_cfg, 'p2', np.random.randn(3)),
+            'start': float(mode_cfg.get('start', 0)),
+            'stop': float(mode_cfg.get('stop', 1))
+        },
+        'circle': {
+            'radius': float(mode_cfg.get('radius', 1)),
+            'center': get_array_from_str(mode_cfg, 'center', np.zeros(3))
+        },
+        'wave': {
+            'radius': float(mode_cfg.get('radius', 1)),
+            'center': get_array_from_str(mode_cfg, 'center', np.zeros(3)),
+            'frequency': float(mode_cfg.get('frequency', 1)),
+            'amplitude': float(mode_cfg.get('amplitude', 1))
+        },
+        'viewsphere': {
+            'scale': float(mode_cfg.get('scale', 1)),
+            'bias': tuple(get_array_from_str(mode_cfg, 'bias', [0, 0, 1.5]))
+        },
+        'piecewiselinear': {
+            'control_points': get_list_from_str(mode_cfg, 'points', [np.zeros(3), np.ones(3)])
+        }
+_______________________________________________________________________________					   
+					   
+					   
+        
+[multiview_setup.mode_config]
+	self.add_param('multiview_setup.mode_config', Configuration(), 'Mode specific configuration')
+        self.add_param('multiview_setup.offset', True,
+                       'If False, multi views are not offset with initial camera location. Default: True')
+
+[debug]        
+        # specific debug config
+        self.add_param('debug.plot', False, 'If True, in debug mode, enable simple visual debug')
+        self.add_param('debug.plot_axis', False, 'If True, in debug-plot mode, plot camera coordinate systems')
+        self.add_param('debug.scatter', False, 'If True, in debug mode-plot, enable scatter plot')
+        self.add_param('debug.save_to_blend', False, 'If True, in debug mode, log to .blend files')
+
+
+General options (always available)
+[dataset]
+# general dataset configuration.
+        self.add_param('dataset.image_count', 1,
+                       'Number of images to generate. Depending whether a multiview dataset generation is requested, \
+                        the final number of images might be controlled by image_count or by a combination of \
+                        scene_count and view_count')
+        self.add_param('dataset.scene_count', 1, 'Number of static scenes to generate')
+        self.add_param('dataset.view_count', 1, 'Number of camera views per scene to generate')
+        self.add_param('dataset.base_path', '', 'Path to storage directory')
+        self.add_param('dataset.scene_type', '', 'Scene type')
+
+[camera_info]
+        # camera configuration
+        self.add_param('camera_info.name', 'Pinhole Camera', 'Name for the camera')
+        self.add_param('camera_info.model', 'pinhole', 'Camera model type')
+        self.add_param('camera_info.width', 640, 'Rendered image resolution (pixel) along x (width)')
+        self.add_param('camera_info.height', 480, 'Rendered image resolution (pixel) along y (height)')
+        self.add_param('camera_info.zeroing', [0.0, 0.0, 0.0], 'Default camera zeroing rotation in degrees')
+        self.add_param('camera_info.intrinsic', [],
+                       'camera intrinsics fx, fy, cx, cy, possible altered via blender during runtime.'
+                       ' If not available, leave empty.',
+                       special='maybe_list')
+        self.add_param('camera_info.sensor_width', 0.0, 'Sensor width in mm (if not available, set to 0.0)')
+        self.add_param('camera_info.focal_length', 0.0, 'Focal length in mm (if not available, set to 0.0)')
+        self.add_param('camera_info.hfov', 0.0,
+                       'Horizontal Field-of-View of the camera in degrees (if not available, set to 0.0)')
+        self.add_param('camera_info.intrinsics_conversion_mode', 'mm',
+                       'Determine how to compute camera setup from intrinsics. One of "fov", "mm".')
+
+        # self.add_param('camera_info.original_intrinsic', [],
+        # 'Camera intrinsics that were passed originaly as camera_info.intrinsic', special='maybe_list')
+
+[render_setup]
+        # render configuration
+        self.add_param('render_setup.backend', 'blender-cycles', 'Render backend. Blender only one supported, currently cycles is hard coded to be used')
+        self.add_param('render_setup.integrator', 'BRANCHED_PATH',
+                       'Integrator used during path tracing. Either of PATH, BRANCHED_PATH')
+        self.add_param('render_setup.denoising', True, 'Use denoising algorithms during rendering')
+        self.add_param('render_setup.samples', 128, 'Samples to use during rendering')
+        self.add_param('render_setup.color_depth', 16, 'Depth for color (RGB) image [16bit, 8bit]. Default: 16')
+        self.add_param('render_setup.allow_occlusions', False, 'If True, allow objects to be occluded from camera')
+        self.add_param('render_setup.motion_blur', False,
+                       'If True, toggle motion blur during rendering.'
+                       ' Motion blur specific config must be set directly in the .blend blnderer scene')
+
+[debug] 
+        # debug
+        self.add_param('debug.enabled', False, 'If True, enable debugging. For specifc flags refer to single scenes')
+
+[postprocess]
+        # postprocess
+        self.add_param('postprocess.depth_scale', 1e4, 'Scale used to convert range to depth. Default: 1e4 (.1mm)')
+        self.add_param('postprocess.visibility_from_mask', False,
+                       'If True, if an invalid (empty) mask is found during postprocessing,'
+                       ' object visibility info are overwritten to false')
+        self.add_param('postprocess.parallel_cameras', [],
+                       'Pair of parallel stereo cameras (among scene_setup.cameras) to postprocess')
+        self.add_param('postprocess.compute_disparity', False,
+                       'If True, toggle computation of disparity map (from depth) based on given baseline (mm) value')
+        self.add_param('postprocess.parallel_cameras_baseline_mm', 0,
+                       'Baseline value (i.e., translation) between parallel cameras locations (in mm). Default: 0')
+
+[parts]
