@@ -56,6 +56,7 @@ class Worker():
             return json.load(f)
       
 
+        print(datetime.now())
         n_comp=get_composition_index(self.file)
         n_scene=get_scene_index(self.file)
         n_view=get_view_index(self.file)
