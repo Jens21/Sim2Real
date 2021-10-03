@@ -62,11 +62,16 @@ class Worker():
             
         dict_annot=load_dict(self.direc+self.file)
         dict_annot=self.remove_invalid_objs(dict_annot)
-        
+
+        print(datetime.now())
         img_label=self.create_label_file(dict_annot,self.direc,n_comp,n_scene,n_view,self.i)
+        print(datetime.now())
         meta_file=self.create_meta_file(dict_annot,self.direc,n_comp,n_scene,n_view,self.i)
+        print(datetime.now())
         img_color=scenarios.Color().create_color_file(list_textures, args.DIR_OUTPUT, args.PRE_LABELING, direc, n_comp, n_scene, n_view, self.i)
+        print(datetime.now())
         img_depth=scenarios.Depth().create_depth_file(list_textures, args.DIR_OUTPUT, args.PRE_LABELING, direc,n_comp,n_scene,n_view,self.i)
+        print(datetime.now())
         #img_color=self.create_color_file(self.direc,n_comp,n_scene,n_view,self.i)
         #img_depth=self.create_depth_file(self.direc,n_comp,n_scene,n_view,self.i)
      
