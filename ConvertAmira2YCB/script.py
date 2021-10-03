@@ -237,8 +237,9 @@ class Worker():
 
 
 def create_list_textures():
-    for tex in os.listdir(args.DIR_BACKGROUND_TEXTURES):
-        list_textures.append(args.DIR_BACKGROUND_TEXTURES+tex)
+    if os.path.isdir(args.DIR_BACKGROUND_TEXTURES):
+        for tex in os.listdir(args.DIR_BACKGROUND_TEXTURES):
+            list_textures.append(args.DIR_BACKGROUND_TEXTURES+tex)
     
 def create_list_of_annotation_files():
     direc=args.DIR_INPUT

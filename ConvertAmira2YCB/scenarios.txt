@@ -1,0 +1,2 @@
+scenario_1:
+The background of the rgb image becomes transparent and the background of the depth image becomes black (value=0)
