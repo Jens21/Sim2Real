@@ -4,13 +4,6 @@ from numpy.compat.py3k import npy_load_module
 import cv2
 import numpy as np
 
-def convert_numpy_types(arr,to_type):
-    if arr.dtype==np.dtype(np.uint16):
-        return np.multiply(arr,255.0/2**16).astype(np.dtype(to_type))
-    else:
-        raise ValueError("The array has the wrong dtype: "+str(arr.dtype))
-        return None
-
 class Color():
     def __init__(self):
         pass
@@ -26,9 +19,26 @@ class Color():
 
     def scenario_1(self, file_rgb, file_backdrop):  #This scenario makes the background transparent
         if os.path.isfile(file_rgb) and os.path.isfile(file_backdrop): 
-            img_rgb=convert_numpy_types(cv2.imread(file_rgb, cv2.IMREAD_UNCHANGED),np.uint8)
-            img_backdrop=convert_numpy_types(cv2.imread(file_backdrop, cv2.IMREAD_UNCHANGED)[:,:,0],np.uint8)
+            img_rgb=cv2.imread(file_rgb, cv2.IMREAD_UNCHANGED)
+            img_backdrop=cv2.imread(file_backdrop, cv2.IMREAD_UNCHANGED)
 
+            img_result=np.zeros((480,640,4), dtype="uint8")
+            img_backdrop=np.subtract(255,img_backdrop)
+            img_result[:,:,0:3]=np.where(img_backdrop[:,:]==0, img_result[:,:,0:3], np.multiply(img_rgb,255.0/2**16))
+            img_result[:,:,3]=img_backdrop[:,:,0]
+
+            """
+            for y in range(480):
+                for x in range(640):
+                    back=255-img_backdrop[y,x,0]
+
+                    if back!=0:
+                        img_result[y,x,0]=img_rgb[y,x,0]/2**16*255.0
+                        img_result[y,x,1]=img_rgb[y,x,1]/2**16*255.0
+                        img_result[y,x,2]=img_rgb[y,x,2]/2**16*255.0
+                        img_result[y,x,3]=back
+
+            
             img_backdrop=np.subtract(255,img_backdrop)
             img_rgb=cv2.cvtColor(img_rgb, cv2.COLOR_RGB2RGBA)
 
@@ -36,8 +46,8 @@ class Color():
             img_rgb[:,:,0]=np.where(np.equal(img_backdrop,0),img_backdrop,img_rgb[:,:,0])
             img_rgb[:,:,1]=np.where(np.equal(img_backdrop,0),img_backdrop,img_rgb[:,:,1])
             img_rgb[:,:,2]=np.where(np.equal(img_backdrop,0),img_backdrop,img_rgb[:,:,2])
-
-            return img_rgb
+            """
+            return img_result
 
         return None
 
@@ -60,6 +70,20 @@ class Depth():
 
             img_depth=np.where(np.greater(img_depth,10),0,img_depth)
             img_depth=np.multiply(img_depth,10000.0)
+
+            img_result=np.zeros((480,640),dtype="uint16")
+            img_backdrop=np.subtract(65535,img_backdrop)
+
+            img_result=np.where(np.equal(img_backdrop,0),img_result,img_depth)
+
+            return img_result
+
+            """
+            img_depth=cv2.imread(file_depth, cv2.IMREAD_UNCHANGED)[:,:,0]
+            img_backdrop=cv2.imread(file_backdrop, cv2.IMREAD_UNCHANGED)[:,:,0]
+
+            img_depth=np.where(np.greater(img_depth,10),0,img_depth)
+            img_depth=np.multiply(img_depth,10000.0)
             img_depth=img_depth.astype('uint16')
 
             #img_backdrop=65535-img_backdrop
@@ -67,5 +91,5 @@ class Depth():
             img_depth=np.where(np.equal(img_backdrop,0),0,img_depth)
 
             return img_depth
-
+            """
         return None
