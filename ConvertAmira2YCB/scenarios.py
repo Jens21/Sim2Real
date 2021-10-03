@@ -6,7 +6,7 @@ import numpy as np
 
 def convert_numpy_types(arr,to_type):
     if arr.dtype==np.dtype(np.uint16):
-        return (arr/2**16*255.0).astype(np.dtype(to_type))
+        return np.multiply(arr,255.0/2**16).astype(np.dtype(to_type))
     else:
         raise ValueError("The array has the wrong dtype: "+str(arr.dtype))
         return None
@@ -29,13 +29,13 @@ class Color():
             img_rgb=convert_numpy_types(cv2.imread(file_rgb, cv2.IMREAD_UNCHANGED),np.uint8)
             img_backdrop=convert_numpy_types(cv2.imread(file_backdrop, cv2.IMREAD_UNCHANGED)[:,:,0],np.uint8)
 
-            img_backdrop=255-img_backdrop
+            img_backdrop=np.subtract(255,img_backdrop)
             img_rgb=cv2.cvtColor(img_rgb, cv2.COLOR_RGB2RGBA)
 
             img_rgb[:,:,3]=img_backdrop
-            img_rgb[:,:,0]=np.where(img_backdrop==0,img_backdrop,img_rgb[:,:,0])
-            img_rgb[:,:,1]=np.where(img_backdrop==0,img_backdrop,img_rgb[:,:,1])
-            img_rgb[:,:,2]=np.where(img_backdrop==0,img_backdrop,img_rgb[:,:,2])
+            img_rgb[:,:,0]=np.where(np.equal(img_backdrop,0),img_backdrop,img_rgb[:,:,0])
+            img_rgb[:,:,1]=np.where(np.equal(img_backdrop,0),img_backdrop,img_rgb[:,:,1])
+            img_rgb[:,:,2]=np.where(np.equal(img_backdrop,0),img_backdrop,img_rgb[:,:,2])
 
             return img_rgb
 
@@ -58,12 +58,13 @@ class Depth():
             img_depth=cv2.imread(file_depth, cv2.IMREAD_UNCHANGED)[:,:,0]
             img_backdrop=cv2.imread(file_backdrop, cv2.IMREAD_UNCHANGED)[:,:,0]
 
-            img_depth=np.where(img_depth>10,0,img_depth)
-            img_depth=img_depth*10000.0
+            img_depth=np.where(np.greater(img_depth,10),0,img_depth)
+            img_depth=np.multiply(img_depth,10000.0)
             img_depth=img_depth.astype('uint16')
 
-            img_backdrop=65535-img_backdrop
-            img_depth=np.where(img_backdrop==0,0,img_depth)
+            #img_backdrop=65535-img_backdrop
+            img_backdrop=np.subtract(65535,img_backdrop)
+            img_depth=np.where(np.equal(img_backdrop,0),0,img_depth)
 
             return img_depth
 
