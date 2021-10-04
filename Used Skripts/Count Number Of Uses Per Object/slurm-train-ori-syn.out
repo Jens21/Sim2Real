@@ -1,0 +1,39 @@
+All original synthetic training data examples:
+extra_large_clamp : 3757 , 4.69625 %
+large_marker : 3762 , 4.7025 %
+mustard_bottle : 3802 , 4.7524999999999995 %
+scissors : 3796 , 4.745 %
+potted_meat_can : 3806 , 4.7575 %
+sugar_box : 3665 , 4.58125 %
+power_drill : 3874 , 4.8425 %
+gelatin_box : 3891 , 4.86375 %
+tuna_fish_can : 3828 , 4.784999999999999 %
+tomato_soup_can : 3835 , 4.79375 %
+mug : 3932 , 4.915 %
+cracker_box : 3786 , 4.7325 %
+large_clamp : 3746 , 4.6825 %
+bowl : 3751 , 4.68875 %
+master_chef_can : 3917 , 4.89625 %
+banana : 3864 , 4.83 %
+foam_brick : 3719 , 4.64875 %
+pitcher_base : 3842 , 4.8025 %
+bleach_cleanser : 3761 , 4.70125 %
+pudding_box : 3797 , 4.74625 %
+wood_block : 3869 , 4.836250000000001 %
+Number of files: 80000
+
+============================= JOB FEEDBACK =============================
+
+NodeName=uc2n521
+Job ID: 19822323
+Array Job ID: 19822323_0
+Cluster: uc2
+User/Group: yc5412/anthropomatik
+State: COMPLETED (exit code 0)
+Nodes: 1
+Cores per node: 80
+CPU Utilized: 00:21:31
+CPU Efficiency: 6.61% of 05:25:20 core-walltime
+Job Wall-clock time: 00:04:04
+Memory Utilized: 1.01 GB
+Memory Efficiency: 0.57% of 175.78 GB

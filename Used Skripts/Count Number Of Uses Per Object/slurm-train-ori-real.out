@@ -1,0 +1,39 @@
+All original real training data examples:
+gelatin_box : 4586 , 6.222354888605465 %
+mug : 3238 , 4.393367886895878 %
+foam_brick : 3801 , 5.157254891319096 %
+master_chef_can : 3138 , 4.257686358579143 %
+cracker_box : 3816 , 5.177607120566606 %
+sugar_box : 3220 , 4.368945211798866 %
+mustard_bottle : 4221 , 5.727117310249382 %
+pudding_box : 4464 , 6.056823424059048 %
+potted_meat_can : 3868 , 5.248161515291308 %
+banana : 4246 , 5.761037692328566 %
+wood_block : 2759 , 3.7434533662587177 %
+large_marker : 3869 , 5.2495183305744755 %
+tomato_soup_can : 4212 , 5.714905972700877 %
+extra_large_clamp : 3074 , 4.170850180456433 %
+scissors : 3630 , 4.925239477897479 %
+large_clamp : 3091 , 4.1939160402702775 %
+bleach_cleanser : 3285 , 4.4571382052047435 %
+power_drill : 2995 , 4.063661773086212 %
+bowl : 1631 , 2.212965726845947 %
+tuna_fish_can : 3321 , 4.505983555398768 %
+pitcher_base : 3237 , 4.3920110716127105 %
+Number of files: 16189
+
+============================= JOB FEEDBACK =============================
+
+NodeName=uc2n521
+Job ID: 19822263
+Array Job ID: 19822263_0
+Cluster: uc2
+User/Group: yc5412/anthropomatik
+State: COMPLETED (exit code 0)
+Nodes: 1
+Cores per node: 80
+CPU Utilized: 00:04:31
+CPU Efficiency: 5.74% of 01:18:40 core-walltime
+Job Wall-clock time: 00:00:59
+Memory Utilized: 536.77 MB
+Memory Efficiency: 0.30% of 175.78 GB
