@@ -41,7 +41,7 @@ def concat(s,l):
 if __name__=="__main__":
     l=[]
 
-    """
+    
     BASE_PATH="/pfs/data5/home/kit/anthropomatik/yc5412/YCB_Video_Dataset/data/"
     #BASE_PATH="/pfs/data5/home/kit/anthropomatik/yc5412/Test/"
     
@@ -59,8 +59,11 @@ if __name__=="__main__":
     l=l+concat(BASE_PATH+"0057/",os.listdir(BASE_PATH+"0057/"))
     l=l+concat(BASE_PATH+"0058/",os.listdir(BASE_PATH+"0058/"))
     l=l+concat(BASE_PATH+"0059/",os.listdir(BASE_PATH+"0059/"))
-    """
-    l=["/pfs/data5/home/kit/anthropomatik/yc5412/sim2Real/amira/distractor within parts/OutputTrain/"+x for x in os.listdir("/pfs/data5/home/kit/anthropomatik/yc5412/sim2Real/amira/distractor within parts/OutputTrain")]
+   
+    #l=["/pfs/data5/home/kit/anthropomatik/yc5412/sim2Real/amira/distractor within parts/OutputTrain/"+x for x in os.listdir("/pfs/data5/home/kit/anthropomatik/yc5412/sim2Real/amira/distractor within parts/OutputTrain")]
+    
+    #base_path="/pfs/data5/home/kit/anthropomatik/yc5412/YCB_Video_Dataset/"
+    #l=[base_path+x for x in os.listdir(base_path) if x.endswith("-meta.mat")]
     
     l=[x for x in l if x.endswith("-meta.mat")]
     
