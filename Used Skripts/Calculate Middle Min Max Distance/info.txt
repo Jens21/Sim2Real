@@ -1,0 +1,2 @@
+Dieses Skript berechnet die minimale und die maximale Distanz des YCB - Objektes, welches sich am nächsten zur Kamera befindet
+Damit kann entschieden werden, wie weit die Trainingsobjekte entfernt platziert werden sollen bzw. wie weit entfernt die Kamera sein soll

@@ -1,0 +1,1 @@
+This Skript calculates the angle between the middle point of the objects and the camera location in the test images

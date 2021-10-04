@@ -1,0 +1,3 @@
+This file replicates original random data examples
+
+start with "python replicate_original_data.py"

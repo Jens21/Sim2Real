@@ -1,0 +1,2 @@
+Mittels GetUsefulABCFiles werden vom ABC Datensatz von Chunk 0000 die Objekte ausgesucht, deren größte Ausdehnung kleiner als die des pitcher base und größer als die der tuna can sind (als zwischen Tuna can und pitcher base)
+Außerdem werden sie auf 5000 Faces reduziert

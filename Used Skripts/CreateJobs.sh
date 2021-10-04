@@ -1,0 +1,1 @@
+sbatch -p dev_single -n 1 -t 10:00 --mem=5000  Start0000.txt

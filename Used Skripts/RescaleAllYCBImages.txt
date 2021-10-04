@@ -1,0 +1,100 @@
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+
+public class CropImages{
+	
+	private static List<String>files=Collections.synchronizedList(new ArrayList<>());
+	
+	private static volatile int counter=0;
+	
+	private static synchronized void incrementCounter() {
+		counter++;
+		
+		if(counter%50==0) {
+			System.out.println(counter+"\t"+files.size()+"\t"+((float)counter)/(float)files.size());
+		}
+	}
+	
+	private static void getAllFiles(String beginFile) {
+		File f = new File(beginFile).getAbsoluteFile();
+
+		Arrays.stream(f.list()).forEach(file->{
+			String s=f.toString()+"/"+file;
+			
+			if(new File(s).isDirectory() && file.startsWith("0030")) {	
+				getAllFiles(s);
+				System.out.println(s);
+			}
+			else {
+				if(file.endsWith("color.png")) {
+					files.add(s);
+				}
+			}
+		});
+		
+//		for(String file:f.list()) {
+//			String s=f.toString()+"/"+file;
+//			
+//			if(new File(s).isDirectory()) {	
+//				getAllFiles(s);
+//				System.out.println(s);
+//			}
+//			else {
+//				if(file.endsWith("color.png")) {
+//					files.add(s);
+//				}
+//			}
+//		}
+	}
+	
+	private static void rescaleImage(String fileIn, String fileOut) {
+		File f=new File(fileIn);
+		
+		try {
+			BufferedImage buf=ImageIO.read(f);
+			
+			if(buf!=null) {
+				BufferedImage bufOut=new BufferedImage(buf.getWidth()/2, buf.getHeight()/2, buf.getType());
+				Graphics2D g2d=(Graphics2D) bufOut.getGraphics();
+				 RenderingHints rh = new RenderingHints(
+			             RenderingHints.KEY_INTERPOLATION,
+			             RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+			    g2d.setRenderingHints(rh);
+				g2d.drawImage(buf, 0, 0, bufOut.getWidth(), bufOut.getHeight(), null);
+				
+				ImageIO.write(bufOut, "JPG", new File(fileOut));
+			}
+			
+			incrementCounter();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args) {
+		String beginFile=new File("").getAbsolutePath().toString();
+		
+		getAllFiles(beginFile);		
+		files.stream().forEach(fileIn->{
+			String appendix=fileIn.toString().replace(beginFile, "");
+			String fileOut=beginFile+"/Edited"+appendix;
+			new File(fileOut).getParentFile().mkdirs();
+//			System.out.println(fileOut);
+			rescaleImage(fileIn, fileOut);
+		});
+		
+	}
+}

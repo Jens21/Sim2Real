@@ -1,0 +1,15 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=1
+#SBATCH --time=30:00
+#SBATCH --mem=2000mb
+#SBATCH --export=ALL
+#SBATCH -J data_syn
+#SBATCH --partition=dev_single
+
+#Usually you should set
+export KMP_AFFINITY=compact,1,0
+#export KMP_AFFINITY=verbose,compact,1,0 prints messages concerning the supported affinity
+#KMP_AFFINITY Description: https://software.intel.com/en-us/node/524790#KMP_AFFINITY_ENVIRONMENT_VARIABLE
+
+"$HOME/p7zip_16.02/bin/7za" x YCB_Video_Dataset.zip YCB_Video_Dataset/data_syn
