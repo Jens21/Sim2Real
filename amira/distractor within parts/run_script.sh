@@ -1,0 +1,40 @@
+#!/bin/bash
+#Kommentar SBATCH --nodes=1
+#SBATCH --cpus-per-task=80
+#SBATCH --time=30:00
+#Kommentar SBATCH --mem=180000mb
+#SBATCH --export=ALL
+#SBATCH -J a_new
+#SBATCH --array=0-12 #TODO 80
+#SBATCH --partition=dev_multiple #dev_gpu_4 #dev_multiple
+#Kommentar SBATCH --gres=gpu:1
+
+THREAD_LIMIT=40 #TODO 40
+RAND_SEED=12345 # RAND_SEED+start_at_image_number ist der genutzte Seed
+
+DEBUG_ABRGEN=True
+COMPOSITIONS=180	#TODO 180
+IMAGE_COUNT=4 #TODO 4	
+#number of images = COMPOSITIONS x SCENES x VIEWS
+
+FORWARD_FRAMES=600	#TODO 600
+SCENE_TYPE="OwnScenariosDistractorWithinParts"
+MODE="DISTRACTOR_WITHIN_PARTS"
+
+SAMPLES=8
+
+#/pfs/data5/home/kit/anthropomatik/yc5412/Sim2Real/amira
+PATH_SCENE_TEMPLATE="$HOME/Sim2Real/amira/distractor within parts/scene_template.blend"
+PATH_CONFIG_TEMPLATE="$HOME/Sim2Real/amira/config_template.cfg"
+PATH_ABRGEN_FILE="$HOME/amira_blender_rendering/scripts/abrgen"
+DIR_ABRGEN_SRC="$HOME/amira_blender_rendering/src/"
+DIR_OUTPUT="$HOME/Sim2Real/amira/distractor within parts/OutputTrain3/"
+DIR_TEMPORARY="$HOME/Sim2Real/amira/distractor within parts/TemporaryTrain3/"
+DIR_TARGET_OBJECTS="$HOME/Sim2Real/amira/parts_target/"
+DIR_DISTRACTOR_OBJECTS="$HOME/Sim2Real/amira/parts_distractor/"
+DIR_FLOOR_TEXTURES="$HOME/Sim2Real/amira/textures/"
+DIR_DISTRACTOR_TEXTURES="$HOME/Sim2Real/amira/textures/"
+
+START_AT_IMAGE_NUMBER="$((SLURM_ARRAY_TASK_ID*COMPOSITIONS+100000))"
+
+blender --background --python script.py -- --DIR_DISTRACTOR_TEXTURES="$DIR_DISTRACTOR_TEXTURES" --DIR_FLOOR_TEXTURES="$DIR_FLOOR_TEXTURES" --FORWARD_FRAMES=$FORWARD_FRAMES --SCENE_TYPE="$SCENE_TYPE" --MODE="$MODE" --THREAD_LIMIT=$THREAD_LIMIT --RAND_SEED=$RAND_SEED --DEBUG_ABRGEN=$DEBUG_ABRGEN --COMPOSITIONS=$COMPOSITIONS --IMAGE_COUNT=$IMAGE_COUNT --SAMPLES=$SAMPLES --PATH_SCENE_TEMPLATE="$PATH_SCENE_TEMPLATE" --PATH_CONFIG_TEMPLATE="$PATH_CONFIG_TEMPLATE" --PATH_ABRGEN_FILE="$PATH_ABRGEN_FILE" --DIR_ABRGEN_SRC="$DIR_ABRGEN_SRC" --DIR_OUTPUT="$DIR_OUTPUT" --DIR_TEMPORARY="$DIR_TEMPORARY" --DIR_TARGET_OBJECTS="$DIR_TARGET_OBJECTS" --DIR_DISTRACTOR_OBJECTS="$DIR_DISTRACTOR_OBJECTS" --START_AT_IMAGE_NUMBER=$START_AT_IMAGE_NUMBER
