@@ -1,4 +1,4 @@
-**BACHELOR THESIS 2021**
+**BACHELOR THESIS 2021 at KIT and Bosch Tübingen**
 
 This project is my bachelor thesis.
 
