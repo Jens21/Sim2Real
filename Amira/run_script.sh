@@ -23,16 +23,16 @@ MODE="DISTRACTOR_WITHIN_PARTS"
 SAMPLES=8
 
 #/pfs/data5/home/kit/anthropomatik/yc5412/Sim2Real/amira
-PATH_SCENE_TEMPLATE="$HOME/Sim2Real/amira/distractor within parts/scene_template.blend"
-PATH_CONFIG_TEMPLATE="$HOME/Sim2Real/amira/config_template.cfg"
+PATH_SCENE_TEMPLATE="$HOME/Sim2Real/Amira/scene_template.blend"
+PATH_CONFIG_TEMPLATE="$HOME/Sim2Real/Amira/config_template.cfg"
 PATH_ABRGEN_FILE="$HOME/amira_blender_rendering/scripts/abrgen"
 DIR_ABRGEN_SRC="$HOME/amira_blender_rendering/src/"
-DIR_OUTPUT="$HOME/Sim2Real/amira/distractor within parts/OutputTrain/"
-DIR_TEMPORARY="$HOME/Sim2Real/amira/distractor within parts/TemporaryTrain/"
-DIR_TARGET_OBJECTS="$HOME/Sim2Real/amira/parts_target/"
-DIR_DISTRACTOR_OBJECTS="$HOME/Sim2Real/amira/parts_distractor/"
-DIR_FLOOR_TEXTURES="$HOME/Sim2Real/amira/textures/"
-DIR_DISTRACTOR_TEXTURES="$HOME/Sim2Real/amira/textures/"
+DIR_OUTPUT="$HOME/Sim2Real/Amira/OutputTrain/"
+DIR_TEMPORARY="$HOME/Sim2Real/Amira/TemporaryTrain/"
+DIR_TARGET_OBJECTS="$HOME/Sim2Real/Amira/Parts_Target/"
+DIR_DISTRACTOR_OBJECTS="$HOME/Sim2Real/Amira/Parts_Distractor/"
+DIR_FLOOR_TEXTURES="$HOME/Sim2Real/Amira/Textures/"
+DIR_DISTRACTOR_TEXTURES="$HOME/Sim2Real/Amira/Textures/"
 
 START_AT_IMAGE_NUMBER="$((SLURM_ARRAY_TASK_ID*COMPOSITIONS+0))"
 
