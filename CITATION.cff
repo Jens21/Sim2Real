@@ -1,0 +1,9 @@
+cff-version: 1.0.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Beißwenger"
+  given-names: "Jens"
+title: "Improving the Sim2Real performance for 6D pose estimation using photorealistic RGB-D images"
+version: 1.0.0
+date-released: 2021-10-14
+url: "https://github.com/Jens21/Sim2Real"
