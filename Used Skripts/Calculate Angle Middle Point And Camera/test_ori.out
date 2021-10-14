@@ -1,0 +1,28 @@
+Mean:  27.43315859532166
+0 - 10:  11.541839481074303
+1 - 10:  16.380864048865554
+2 - 10:  20.694055318127504
+3 - 10:  22.625258981282265
+4 - 10:  24.0796678886685
+5 - 10:  25.151182765075262
+6 - 10:  26.729641520013466
+7 - 10:  29.66499068646274
+8 - 10:  32.03641319407704
+9 - 10:  37.30607393426648
+10 - 10:  66.8781015891939
+
+============================= JOB FEEDBACK =============================
+
+NodeName=uc2n522
+Job ID: 19977533
+Array Job ID: 19977533_0
+Cluster: uc2
+User/Group: yc5412/anthropomatik
+State: COMPLETED (exit code 0)
+Nodes: 1
+Cores per node: 80
+CPU Utilized: 00:17:59
+CPU Efficiency: 2.54% of 11:46:40 core-walltime
+Job Wall-clock time: 00:08:50
+Memory Utilized: 577.26 MB
+Memory Efficiency: 0.32% of 175.78 GB

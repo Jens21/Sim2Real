@@ -156,6 +156,8 @@ class Worker():
             return None         
 
     def create_label_file(self,dict_annot,direc,n_comp, n_scene,n_view,index):
+        return scenarios.Label().create_label_file(args.DIR_OUTPUT, args.PRE_LABELING, index, dict_annot, n_comp, n_scene, n_view, direc, dict_label_indices)
+        """
         try:
             img_label=np.zeros((480,640),dtype="uint8")
             file_label=args.DIR_OUTPUT+args.PRE_LABELING+str(f'{index:06d}')+"-label.png"
@@ -173,6 +175,7 @@ class Worker():
             #cv2.imwrite(file_label, img_label)
         except:
             return None
+        """
 
     def create_color_file(self,direc,n_comp,n_scene,n_view,index):
         return scenarios.Color.create_color_file(list_textures, direc, n_comp, n_scene, n_view, index)
@@ -249,6 +252,8 @@ def create_list_of_annotation_files():
             if i>=args.START_AT_IMAGE_NUMBER and i<args.START_AT_IMAGE_NUMBER+args.NUMBER_OF_IMAGES:
                 list_annot.append((direc,file))
             i+=1
+
+    list_annot.sort()
 
 def create_dict_label_indices():
     dict_label_indices["master_chef_can"]=1

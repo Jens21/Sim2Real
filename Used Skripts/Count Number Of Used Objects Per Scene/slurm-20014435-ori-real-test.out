@@ -1,0 +1,20 @@
+Scenes with 5 objects: 1371
+Scenes with 4 objects: 630
+Scenes with 3 objects: 346
+Scenes with 6 objects: 602
+
+============================= JOB FEEDBACK =============================
+
+NodeName=uc2n520
+Job ID: 20014435
+Array Job ID: 20014435_0
+Cluster: uc2
+User/Group: yc5412/anthropomatik
+State: COMPLETED (exit code 0)
+Nodes: 1
+Cores per node: 80
+CPU Utilized: 00:00:49
+CPU Efficiency: 1.28% of 01:04:00 core-walltime
+Job Wall-clock time: 00:00:48
+Memory Utilized: 30.39 MB
+Memory Efficiency: 0.02% of 175.78 GB

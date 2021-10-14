@@ -16,8 +16,8 @@ import argparse
 import bmesh
 
 import sys                                                                                      
-sys.path.append("/home/kit/anthropomatik/yc5412/.conda/envs/ffb6d-venv2/lib/python3.6/site-packages/")     #TODO
-#sys.path.append("/home/jens/miniconda2/lib/python2.7/site-packages/")     #TODO
+#sys.path.append("/home/kit/anthropomatik/yc5412/.conda/envs/ffb6d-venv2/lib/python3.6/site-packages/")     #TODO
+sys.path.append("/home/user/.local/lib/python3.8/site-packages/")     #TODO
 sys.path.append(os.getcwd()+"/")
 from tqdm import tqdm    
 import scenarios
@@ -30,7 +30,6 @@ lock=threading.Lock()
 parser = argparse.ArgumentParser()
 
 parser.add_argument('--THREAD_LIMIT', type=int,default=int(multiprocessing.cpu_count()), help='number of threads to use')
-parser.add_argument('--RAND_SEED', type=int,default=12345, help='random seed to start from')
 
 parser.add_argument('--DEBUG_ABRGEN', type=bool,default=False, help='If debugging of abrgen should be turned on')
 parser.add_argument('--COMPOSITIONS', type=int,default=80, help='number of different compositions')
@@ -64,7 +63,7 @@ args=parser.parse_args(argv)
 all_target_objects=dict()
 all_distractor_objects=dict()
 
-pbar_started=tqdm(total=args.COMPOSITIONS, desc="Started")
+#pbar_started=tqdm(total=args.COMPOSITIONS, desc="Started")
 pbar_ended=tqdm(total=args.COMPOSITIONS, desc="Finished")
 
 paths_floor_textures=os.listdir(args.DIR_FLOOR_TEXTURES)
@@ -82,8 +81,8 @@ class Worker():
             return
         
         #updates the display progress bar
-        pbar_started.update()
-        pbar_ended.refresh()
+        #pbar_started.update()
+        #pbar_ended.refresh()
         
         #creates a scene, runs the blender rending framework, postprocesses the created files and removes the temporary files afterwards
         self.create_random_composition(self.composition_index)
@@ -92,8 +91,8 @@ class Worker():
         self.remove_tempory_files()
         
         #updates the display progress bar
-        pbar_started.refresh()
-        pbar_ended.refresh()
+        #pbar_started.refresh()
+        pbar_ended.update()
      
     def create_random_composition(self,composition_index):
         def change_lights_randomly():            
@@ -103,7 +102,7 @@ class Worker():
                 if(obj.name.startswith('Light')):
                     lights.append(obj)
                     
-            scenarios.Lights().change_lights_properties(lights)
+            scenarios.Lights(composition_index).change_lights_properties(lights)
           
         def change_floor_texture_randomly():
             if args.MODE!="DISTRACTOR_WITHIN_PARTS_IN_AIR":
@@ -125,7 +124,7 @@ class Worker():
                 else:
                     obj.data.materials.append(mat)
 
-        def create_random_config_file(self):     
+        def create_random_config_file(self,composition_index):     
             f=open(args.PATH_CONFIG_TEMPLATE,"r")
             config_template_content=f.read()
             f.close()
@@ -137,8 +136,10 @@ class Worker():
             config_template_content=config_template_content.replace("#scene_type", str(args.SCENE_TYPE))
             config_template_content=config_template_content.replace("#base_path", args.DIR_TEMPORARY+"Output"+str(self.composition_index))
             config_template_content=config_template_content.replace("#distractor_textures_dir", str(args.DIR_DISTRACTOR_TEXTURES))
+            config_template_content=config_template_content.replace("#synthetic_sample", str(composition_index))
             
-            obj_composition=scenarios.ObjectComposition().get_object_composition(all_target_objects, all_distractor_objects)
+            obj_composition=scenarios.ObjectComposition(composition_index).get_object_composition(all_target_objects, all_distractor_objects)
+            
             target_objects=obj_composition[0]
             distractor_objects=obj_composition[1]
             
@@ -157,7 +158,7 @@ class Worker():
                 config_template_content=config_template_content.replace("#distractor_objects","parts."+distractor+":1,#distractor_objects")
             config_template_content=config_template_content.replace(",#distractor_objects","")
             config_template_content=config_template_content.replace("#distractor_objects","")
-                        
+                    
             if args.DEBUG_ABRGEN:
                 config_template_content=config_template_content.replace("#debug_enabled", "True")
                 config_template_content=config_template_content.replace("#debug_save_to_blend", "True")
@@ -169,13 +170,12 @@ class Worker():
             f_w.write(config_template_content)
             f_w.close()
      
-     
         lock.acquire()
         change_lights_randomly()
         change_floor_texture_randomly()
         bpy.ops.wm.save_mainfile(filepath=str(args.DIR_TEMPORARY+"scenes/scene"+str(self.composition_index)+".blend"))
         
-        create_random_config_file(self)
+        create_random_config_file(self, composition_index)
         lock.release()
         
     def run_abrgen(self):
@@ -203,7 +203,7 @@ class Worker():
     def remove_tempory_files(self):
         os.remove(args.DIR_TEMPORARY+"scenes/scene"+str(self.composition_index)+".blend")
         os.remove(args.DIR_TEMPORARY+"configs/config"+str(self.composition_index)+".cfg")
-        shutil.rmtree(args.DIR_TEMPORARY+"Output"+str(self.composition_index)+"-Camera")
+        #shutil.rmtree(args.DIR_TEMPORARY+"Output"+str(self.composition_index)+"-Camera")
     
 #all_target_objects intersection all_distractor_objects = empty set
 def add_all_target_objects():  
@@ -243,8 +243,6 @@ def add_all_distractor_objects():
 if __name__=='__main__':
     print("THREAD_LIMIT="+str(args.THREAD_LIMIT))
 
-    np.random.seed(args.RAND_SEED+args.START_AT_IMAGE_NUMBER) #important to know
-
     os.makedirs(args.DIR_OUTPUT, exist_ok=True)
     os.makedirs(args.DIR_TEMPORARY, exist_ok=True)
     os.makedirs(args.DIR_TEMPORARY+"scenes", exist_ok=True)
@@ -260,7 +258,7 @@ if __name__=='__main__':
     #for comp_index in range(args.COMPOSITIONS):
     #    Worker(comp_index+args.START_AT_IMAGE_NUMBER).run()
     
-    pbar_started.close()
+    #pbar_started.close()
     pbar_ended.close()
     
     #shutil.rmtree(args.DIR_TEMPORARY) 

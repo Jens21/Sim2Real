@@ -98,7 +98,7 @@ if __name__=="__main__":
     #BASE_PATH="/pfs/data5/home/kit/anthropomatik/yc5412/Test/"
     
     #l=l+concat(BASE_PATH,os.listdir(BASE_PATH))
-    """
+    
     l=l+concat(BASE_PATH+"0048/",os.listdir(BASE_PATH+"0048/"))
     l=l+concat(BASE_PATH+"0049/",os.listdir(BASE_PATH+"0049/"))
     l=l+concat(BASE_PATH+"0050/",os.listdir(BASE_PATH+"0050/"))
@@ -112,15 +112,14 @@ if __name__=="__main__":
     l=l+concat(BASE_PATH+"0058/",os.listdir(BASE_PATH+"0058/"))
     l=l+concat(BASE_PATH+"0059/",os.listdir(BASE_PATH+"0059/"))
     
-    """
     #l=["/pfs/data5/home/kit/anthropomatik/yc5412/sim2Real/amira/distractor within parts/OutputTrain/"+x for x in os.listdir("/pfs/data5/home/kit/anthropomatik/yc5412/sim2Real/amira/distractor within parts/OutputTrain")]
     
     #base_path="/pfs/data5/home/kit/anthropomatik/yc5412/YCB_Video_Dataset/"
     #l=[base_path+x for x in os.listdir(base_path) if "-meta" in x]    
     
-    #l=[x for x in l if x.endswith("-meta.mat")]
+    l=[x for x in l if x.endswith("-meta.mat")]
     
-    l=["/pfs/data5/home/kit/anthropomatik/yc5412/YCB_Video_Dataset/data/0059/000001-meta.mat"]
+    #l=["/pfs/data5/home/kit/anthropomatik/yc5412/YCB_Video_Dataset/data/0059/000001-meta.mat"]
 
     np.random.shuffle(l)
     
