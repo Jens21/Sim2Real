@@ -10,7 +10,7 @@ from scipy.spatial.transform import Rotation as R
 
 #amira Script
 
-BASE_PATH_TO_READ_FILES_IN="/home/user/Downloads/OutputTrain"
+BASE_PATH_TO_READ_FILES_IN="/home/user/Downloads"
 
 def degree_to_radian(degree):
     return degree/180.0*np.pi
@@ -124,8 +124,9 @@ class ObjectComposition():
         l.sort()
 
         mat=scipy.io.loadmat(l[self.index])
-        indices=mat['cls_indexes']
-        indices=[x for [x] in indices]
+        indices=mat['cls_indexes'][0]
+        indices=[int(x) for x in indices]
+
 
         for index in indices:
             targets.append(list(all_target_objects)[index-1])
@@ -260,7 +261,7 @@ class Objects():
                 #mirror=np.asarray([[1,0,0,0],[0,-1,0,0],[0,0,-1,0],[0,0,0,1]])  #mirror z and y                    
                 #cam_matrix=np.matmul(cam_matrix,mirror)
             else:
-                cam_matrix=Matrix([[1.0, 0.0, 0.0, 0.0], [0.0, -1.0, 0.0, 0.0], [0.0, 0.0, -1.0, 0.0], [.0, 0.0, 0.0, 1.0]])
+                cam_matrix=np.array([[1,0,0,0], [0,1,0,0], [0,0,1,0], [0,0,0,1]])
 
             pose=np.matmul(cam_matrix,pose)
 
@@ -546,11 +547,12 @@ class Camera():
             
             cam.matrix_world=rot_trans_matrix.transpose()
         else:
-            cam.location=rot_trans_matrix[0:3,3]    #Geht, da die Camera nicht an der Simulation beteiligt ist
-            cam.rotation_euler=(0,0,0)
+            rot_trans_matrix=np.array([[1,0,0,0],[0,-1,0,0],[0,0,-1,0],[0,0,0,1]])
+            cam.matrix_world=rot_trans_matrix.transpose()
 
         collision_ground=bpy.data.objects["CollisionGround"]
         collision_ground.hide_render=True
+        collision_ground.hide_viewport=True
 
         bpy.context.view_layer.update()
 

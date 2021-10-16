@@ -252,11 +252,11 @@ if __name__=='__main__':
     add_all_distractor_objects()
                 
     bpy.ops.wm.open_mainfile(filepath=str(args.PATH_SCENE_TEMPLATE))     #This has to be done here
-    with concurrent.futures.ThreadPoolExecutor(max_workers=args.THREAD_LIMIT) as executor:
-        for comp_index in range(args.COMPOSITIONS):
-            executor.submit(Worker(comp_index+args.START_AT_IMAGE_NUMBER).run)
-    #for comp_index in range(args.COMPOSITIONS):
-    #    Worker(comp_index+args.START_AT_IMAGE_NUMBER).run()
+    #with concurrent.futures.ThreadPoolExecutor(max_workers=args.THREAD_LIMIT) as executor:
+    #    for comp_index in range(args.COMPOSITIONS):
+    #        executor.submit(Worker(comp_index+args.START_AT_IMAGE_NUMBER).run)
+    for comp_index in range(args.COMPOSITIONS):
+    	Worker(comp_index+args.START_AT_IMAGE_NUMBER).run()
     
     #pbar_started.close()
     pbar_ended.close()
