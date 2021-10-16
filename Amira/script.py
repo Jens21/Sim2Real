@@ -85,10 +85,13 @@ class Worker():
         #pbar_ended.refresh()
         
         #creates a scene, runs the blender rending framework, postprocesses the created files and removes the temporary files afterwards
-        self.create_random_composition(self.composition_index)
-        self.run_abrgen()
-        self.postprocess()
-        self.remove_tempory_files()
+        try:
+            self.create_random_composition(self.composition_index)
+            self.run_abrgen()
+            self.postprocess()
+            self.remove_tempory_files()
+        except GeneratorExit:
+            print("Generator Exit",file=sys.stderr)
         
         #updates the display progress bar
         #pbar_started.refresh()
@@ -140,6 +143,9 @@ class Worker():
             
             obj_composition=scenarios.ObjectComposition(composition_index).get_object_composition(all_target_objects, all_distractor_objects)
             
+            if obj_composition==None:
+                raise GeneratorExit("The object composition isn't valid")
+
             target_objects=obj_composition[0]
             distractor_objects=obj_composition[1]
             
@@ -203,7 +209,7 @@ class Worker():
     def remove_tempory_files(self):
         os.remove(args.DIR_TEMPORARY+"scenes/scene"+str(self.composition_index)+".blend")
         os.remove(args.DIR_TEMPORARY+"configs/config"+str(self.composition_index)+".cfg")
-        #shutil.rmtree(args.DIR_TEMPORARY+"Output"+str(self.composition_index)+"-Camera")
+        shutil.rmtree(args.DIR_TEMPORARY+"Output"+str(self.composition_index)+"-Camera")
     
 #all_target_objects intersection all_distractor_objects = empty set
 def add_all_target_objects():  
@@ -252,11 +258,11 @@ if __name__=='__main__':
     add_all_distractor_objects()
                 
     bpy.ops.wm.open_mainfile(filepath=str(args.PATH_SCENE_TEMPLATE))     #This has to be done here
-    #with concurrent.futures.ThreadPoolExecutor(max_workers=args.THREAD_LIMIT) as executor:
-    #    for comp_index in range(args.COMPOSITIONS):
-    #        executor.submit(Worker(comp_index+args.START_AT_IMAGE_NUMBER).run)
-    for comp_index in range(args.COMPOSITIONS):
-    	Worker(comp_index+args.START_AT_IMAGE_NUMBER).run()
+    with concurrent.futures.ThreadPoolExecutor(max_workers=args.THREAD_LIMIT) as executor:
+        for comp_index in range(args.COMPOSITIONS):
+            executor.submit(Worker(comp_index+args.START_AT_IMAGE_NUMBER).run)
+    #for comp_index in range(args.COMPOSITIONS):
+    #	Worker(comp_index+args.START_AT_IMAGE_NUMBER).run()
     
     #pbar_started.close()
     pbar_ended.close()

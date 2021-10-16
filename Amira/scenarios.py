@@ -119,9 +119,12 @@ class ObjectComposition():
     def scenario_3(self, all_target_objects, all_distractor_objects):   #this scenario reproduces the orignal synthetic dataset
         targets=[]
         distractors=[]
-        
+
         l=[os.path.join(BASE_PATH_TO_READ_FILES_IN,x) for x in os.listdir(BASE_PATH_TO_READ_FILES_IN) if "meta" in x]
         l.sort()
+
+        if self.index>=len(l):
+            return
 
         mat=scipy.io.loadmat(l[self.index])
         indices=mat['cls_indexes'][0]
