@@ -1,4 +1,4 @@
-**Usage**
+**Instructions**
 
 This directory stores the files of the amira blender rendering framework that have to be added. Simply add the given files and you are ready to use Sim2Real.
 
