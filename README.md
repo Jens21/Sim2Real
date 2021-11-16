@@ -25,6 +25,3 @@ Info: If you only want to create the synthetic images you don't need to fulfill 
 ![alt text](example_image1.png)
 ![alt text](example_image2.png)
 ![alt text](example_image3.png)
-=======
-My task is to find out how much synthetic data can simplify the usage of real samples and what configurations make it most effective.
->>>>>>> 449d0d71a775d6cc03c955b21efd7ae9389270a3
