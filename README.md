@@ -4,8 +4,7 @@ This project is my bachelor thesis.
 
 It uses the FFB6D network to estimate the poses of the YCB Video Dataset images.
 
-<<<<<<< HEAD
-My task is to find out how much synthetic data can easy the usage of real samples and what configurations make it most effective.
+My task was to find out how much synthetic data can easy the usage of real samples and what configurations make it most effective.
 
 *Setup*
 1. Clone this directory
