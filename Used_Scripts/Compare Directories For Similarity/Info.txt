@@ -1,0 +1,1 @@
+This file compares two directories. It compares every file in the directory and it's subdirectories. Two different ones will be printed out.

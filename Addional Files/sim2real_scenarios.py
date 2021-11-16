@@ -52,15 +52,15 @@ import amira_blender_rendering.interfaces as interfaces
 from amira_blender_rendering.abc_importer import ABCImporter
 from amira_blender_rendering.utils.annotation import ObjectBookkeeper
 
-_scene_name = 'OwnScenariosDistractorWithinParts'
+_scene_name = 'Sim2Real_Scenarios'
 
 @abr_scenes.register(name=_scene_name, type='config')
-class OwnScenariosDistractorWithinPartsConfiguration(abr_scenes.BaseConfiguration):
-    """This class specifies all configuration options for OwnScenariosDistractorWithinParts"""
+class Sim2Real_Scenarios_Configuration(abr_scenes.BaseConfiguration):
+    """This class specifies all configuration options for Sim2Real_Scenarios"""
 
     def __init__(self):
-        super(OwnScenariosDistractorWithinPartsConfiguration, self).__init__()
-        #print("OwnScenariosDistractorWithinPartsConfiguration")
+        super(Sim2Real_Scenarios_Configuration, self).__init__()
+        #print("Sim2Real_Scenarios_Configuration")
 
         # specific scene configuration
         self.add_param('scene_setup.blend_file', '$AMIRA_DATA_GFX/modeling/workstation_scenarios.blend',
@@ -116,15 +116,13 @@ class OwnScenariosDistractorWithinPartsConfiguration(abr_scenes.BaseConfiguratio
 
 
 @abr_scenes.register(name=_scene_name, type='scene')
-class OwnScenariosDistractorWithinParts(interfaces.ABRScene):
-    """base class for all workstation scenarios"""
+class Sim2Real_Scenarios(interfaces.ABRScene):
+    """base class for all sim2real scenarios"""
     
     def __init__(self, **kwargs):
-        super(OwnScenariosDistractorWithinParts, self).__init__()
+        super(Sim2Real_Scenarios, self).__init__()
         self.logger = get_logger()
         add_file_handler(self.logger)
-
-        #print("Begin Own Scenario="+str(datetime.now().strftime("%M:%S:%f")),file=sys.stderr)   #TODO, remove me
 
         # we do composition here, not inheritance anymore because it is too
         # limiting in its capabilities. Using a render manager is a better way
@@ -132,10 +130,10 @@ class OwnScenariosDistractorWithinParts(interfaces.ABRScene):
         self.renderman = abr_scenes.RenderManager(used_own_scenarios=True)
 
         # extract configuration, then build and activate a split config
-        self.config = kwargs.get('config', OwnScenariosDistractorWithinPartsConfiguration())
-        if self.config.dataset.scene_type.lower() != 'OwnScenariosDistractorWithinParts'.lower():
+        self.config = kwargs.get('config', Sim2Real_Scenarios_Configuration())
+        if self.config.dataset.scene_type.lower() != 'Sim2Real_Scenarios'.lower():
             raise RuntimeError(
-                f"Invalid configuration of scene type {self.config.dataset.scene_type} for class OwnScenariosDistractorWithinParts")
+                f"Invalid configuration of scene type {self.config.dataset.scene_type} for class Sim2Real_Scenarios")
         
         # determine if we are rendering in multiview mode
         self.render_mode = kwargs.get('render_mode', 'default')
