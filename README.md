@@ -8,8 +8,8 @@ My task was to find out how much synthetic data can easy the usage of real sampl
 
 *Setup*
 1. Clone this directory
-2. install the FFB6D according to the github page: https://github.com/ethnhe/FFB6D
-3. install the Amira Blender Rendering Framework and download the ycb video dataset according to the gibhub page: https://github.com/boschresearch/amira_blender_rendering
+2. Install the FFB6D according to the github page: https://github.com/ethnhe/FFB6D
+3. Install the Amira Blender Rendering Framework and download the ycb video dataset according to the gibhub page: https://github.com/boschresearch/amira_blender_rendering
 4. Replace the files of the 'Adapted_Files' directory 
 5. Create the dataset using the directories 'Amira' and 'Convert_Amira_2_YCB'
 6. Replace the 'data_syn' directory of the YCB video dataset (or rename it, i.e. 'data_syn_ori') with the own created dataset which have to be called 'data_syn' also
