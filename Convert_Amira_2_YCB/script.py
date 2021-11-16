@@ -72,11 +72,12 @@ class Worker():
      
         try:
             if img_color!=None and img_depth!=None and img_label!=None and meta_file!=None:
-                
-                cv2.imwrite(img_label[0], img_label[1])
-                scipy.io.savemat(meta_file[0], mdict=meta_file[1])
-                cv2.imwrite(img_color[0], img_color[1])
-                cv2.imwrite(img_depth[0], img_depth[1])
+                if len(img_color[1])==480 and len(img_depth[1])==480 and len(img_label[1])==480 and meta_file[1]!=None:
+                    if img_color[0]!=None and img_depth[0]!=None and img_label[0]!=None and meta_file[0]!=None:
+                        cv2.imwrite(img_label[0], img_label[1])
+                        scipy.io.savemat(meta_file[0], mdict=meta_file[1])
+                        cv2.imwrite(img_color[0], img_color[1])
+                        cv2.imwrite(img_depth[0], img_depth[1])
         except:
             print("Except: "+str(self.i)+"\t"+str(self.file),file=sys.stderr, flush=True)
 
@@ -112,10 +113,12 @@ class Worker():
 
 
         try:
-            cls_indexes=np.zeros((len(dict_annot),1), dtype="uint8")
+            cls_indexes=np.zeros((len(dict_annot),1), dtype="float32")
             for i in range(len(dict_annot)):
-                cls_indexes[i]=float(dict_label_indices[dict_annot[i]["object_class_name"]])
-                
+                cls_indexes[i]=dict_label_indices[dict_annot[i]["object_class_name"]]
+            cls_indexes=[x for [x] in cls_indexes]
+            cls_indexes=[cls_indexes]
+
             intrinsic=np.zeros((3,3), dtype = "float64")
             intrinsic[0,0]=1066.77800000000
             intrinsic[1,1]=1067.48700000000
@@ -123,8 +126,8 @@ class Worker():
             intrinsic[1,2]=241.310900000000
             intrinsic[2,2]=1
 
-            center=np.zeros((len(dict_annot),2),dtype="float64")
-            poses=np.zeros((3,4,len(dict_annot)), dtype = "float64")
+            center=np.zeros((len(dict_annot),2),dtype="float32")
+            poses=np.zeros((3,4,len(dict_annot)), dtype = "float32")
             #vertmap=np.zeros((480,640,3),dtype="float32")
 
             camera_pose=dict_annot[0]["camera_pose"]["q"]
@@ -143,7 +146,7 @@ class Worker():
 
             dictionary=dict()
             dictionary['cls_indexes']=cls_indexes
-            dictionary['factor_depth']=np.array([10000]).astype('uint16')[0]
+            dictionary['factor_depth']=np.array([10000]).astype('float64')[0]
             dictionary['intrinsic_matrix']=intrinsic
             dictionary['rotation_translation_matrix']=camera_matrix
             dictionary['poses']=poses

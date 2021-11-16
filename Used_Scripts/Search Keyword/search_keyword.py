@@ -1,6 +1,6 @@
 import os
 
-keyword="np.random.seed"
+keyword="212"
 BASE_DIR="/home/user/amira_blender_rendering/src/amira_blender_rendering"
 
 def scan_dir(base_dir):

@@ -1,13 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-FILE_TRAIN="/pfs/data5/home/kit/anthropomatik/yc5412/Ausführungen/Ausführung train syn ori 16/slurm-train.out"
-TRANSPARENT=False
-COLOR="orange"
+FILE_TRAIN="/pfs/data5/home/kit/anthropomatik/yc5412/Ausführungen/Ausführung train syn ori 15/slurm-train.out"
 
 keys=["loss_rgbd_seg","loss_kp_of","loss_ctr_of","loss_all","loss_target","acc_rgbd","val_loss"]
+colors=["orange", "green", "red", "blue", "blue", "brown", "brown"]
+transparecies=[True, True, True, False, True, True, True]
 
-y_maxs=[0.3,3,0.2,4,4,100,3]
+y_maxs=[4,4,4,4,4,100,4]
 y_mins=[0,0,0,0,0,85,0.5]
 
 def create_dictionary_from_lines(lines):
@@ -38,7 +38,7 @@ def write_eval_text_file(d):
     
     f_out.close()
 
-def create_graph_file(d,key,y_min,y_max):
+def create_graph_file(d,key,y_min,y_max,col,trans):
     plt.clf()
     
     path_out=FILE_TRAIN[0:-4]+"_"+key+".png"
@@ -61,18 +61,19 @@ def create_graph_file(d,key,y_min,y_max):
     
     plt.xlabel(key)
     plt.ylim(y_min,y_max)
-    plt.xlim(0, 64)
-    plt.plot(x,y,color=COLOR)
+    #plt.xlim(0, 64)
+    plt.xlim(0, 64/2)
+    plt.plot(x,y,color=col)
     plt.show()
     
-    if TRANSPARENT:
+    if trans:
         plt.grid(False)
         plt.axis('off')   
-        plt.savefig(path_out, transparent=True)
+        plt.savefig(path_out, transparent=trans)
     else:   
         plt.grid(True)
         plt.axis('on')  
-        plt.savefig(path_out, transparent=False)
+        plt.savefig(path_out, transparent=trans)
 
 if __name__=="__main__":
     f_in=open(FILE_TRAIN,"r")
@@ -85,6 +86,6 @@ if __name__=="__main__":
     for i,key in enumerate(keys):
         y_max=y_maxs[i]
         y_min=y_mins[i]
-        create_graph_file(d,key,y_min,y_max)
+        create_graph_file(d,key,y_min,y_max,colors[i],transparecies[i])
     
     f_in.close()

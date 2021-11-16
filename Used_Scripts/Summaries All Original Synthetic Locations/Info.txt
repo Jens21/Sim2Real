@@ -1,0 +1,1 @@
+This script summaryses all rotaions and locations of the original synthetic samples in an file

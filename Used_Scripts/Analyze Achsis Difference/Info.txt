@@ -1,0 +1,1 @@
+This script analyses the achsis difference of the objects in each dimension relative to the camera.

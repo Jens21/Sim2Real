@@ -16,8 +16,8 @@ import argparse
 import bmesh
 
 import sys                                                                                      
-#sys.path.append("/home/kit/anthropomatik/yc5412/.conda/envs/ffb6d-venv2/lib/python3.6/site-packages/")     #TODO
-sys.path.append("/home/user/.local/lib/python3.8/site-packages/")     #TODO
+sys.path.append("/home/kit/anthropomatik/yc5412/.conda/envs/ffb6d-venv2/lib/python3.6/site-packages/")     #TODO
+#sys.path.append("/home/user/.local/lib/python3.8/site-packages/")     #TODO
 sys.path.append(os.getcwd()+"/")
 from tqdm import tqdm    
 import scenarios
@@ -77,8 +77,8 @@ class Worker():
         actual_time=datetime.now()
         seconds=(actual_time-starting_time).seconds
         minutes=seconds/60
-        if minutes>=25:
-            return
+        #if minutes>=25:
+        #    return
         
         #updates the display progress bar
         #pbar_started.update()
@@ -90,7 +90,7 @@ class Worker():
             self.run_abrgen()
             self.postprocess()
             self.remove_tempory_files()
-        except GeneratorExit:
+        except:
             print("Generator Exit",file=sys.stderr)
         
         #updates the display progress bar
@@ -104,7 +104,7 @@ class Worker():
             for i, obj in enumerate(bpy.data.objects):
                 if(obj.name.startswith('Light')):
                     lights.append(obj)
-                    
+                  
             scenarios.Lights(composition_index).change_lights_properties(lights)
           
         def change_floor_texture_randomly():

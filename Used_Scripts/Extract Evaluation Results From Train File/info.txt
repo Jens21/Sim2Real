@@ -1,1 +1,0 @@
-This script extracts the evaluation values during training from the training file and saves them seperately in a new file

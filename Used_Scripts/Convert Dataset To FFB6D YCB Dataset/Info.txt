@@ -1,0 +1,1 @@
+This script transfer Sim2Real/Convert_Amira_2_YCB/Dataset to YCB data_syn Dataset

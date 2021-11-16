@@ -5,7 +5,7 @@
 #Kommentar SBATCH --mem=180000mb
 #SBATCH --export=ALL
 #SBATCH -J c_new
-#SBATCH --array=0-0	#TODO 10
+#SBATCH --array=0-9	#TODO 9
 #SBATCH --partition=dev_single
 #Kommentar SBATCH --gres=gpu:1
 
@@ -18,9 +18,10 @@
 #distractor within parts on top of another has START_AT_IMAGE_NUMBER 600000
 
 PRE_LABELING="New"
-NUMBER_OF_IMAGES=10	#TODO 10000
+NUMBER_OF_IMAGES=8010	#TODO 8000
 START_AT_IMAGE_NUMBER="$((SLURM_ARRAY_TASK_ID*NUMBER_OF_IMAGES+0))"
-THREAD_LIMIT=1	#TODO 80
+THREAD_LIMIT=80	#TODO 80
+
 DIR_INPUT="../Amira/OutputTrain/"
 DIR_OUTPUT="OutputTrain/"
 DIR_BACKGROUND_TEXTURES="../Amira/Textures/"

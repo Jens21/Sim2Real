@@ -10,6 +10,8 @@ def calculate_min_max_of_image(path_mat):
     mat = scipy.io.loadmat(path_mat)
       
     min_dist=100_000
+    mean_dist=0
+    max_dist=-100_000
       
     for i in range(len(mat["cls_indexes"])):
         loc_camera=np.array(mat["rotation_translation_matrix"][0:3,3])
@@ -27,9 +29,15 @@ def calculate_min_max_of_image(path_mat):
         
         diff=loc_camera-loc_object
     
-        min_dist=min(min_dist,np.linalg.norm(diff))
-        
-    return (min_dist, path_mat)
+        #min_dist=min(min_dist,np.linalg.norm(diff))
+        dist=np.linalg.norm(diff)
+        mean_dist+=dist
+        min_dist=min(min_dist,dist)
+        max_dist=max(max_dist,dist)
+
+    mean_dist/=len(mat["cls_indexes"])
+
+    return (min_dist, mean_dist, max_dist)
 
 def concat(s,l):
     l2=[]
@@ -70,10 +78,9 @@ if __name__=="__main__":
     np.random.shuffle(l)
     
     futures=[]   
-    min_value=100_000
-    max_value=-100_000
-    mean=0
-    distances=[]
+    min_distances=[]
+    mean_distances=[]
+    max_distances=[]
     
     with ThreadPoolExecutor(max_workers=40) as executor:
         for l_item in l:
@@ -81,20 +88,34 @@ if __name__=="__main__":
             futures.append(future)
      
     for future in futures:
-        (distance,path)=future.result()
+        (min_dist, mean_dist, max_dist)=future.result()
         
-        min_value=min(min_value,distance)
-        max_value=max(max_value,distance)
-        mean+=distance
-        distances.append(distance)
+        min_distances.append(min_dist)
+        mean_distances.append(mean_dist)
+        max_distances.append(max_dist)
     
-    mean/=len(l)
-    distances.sort()
-    
-    print("Min: ",min_value,"\nMax: ", max_value,"\nMean: ",mean)
-    
+    min_distances.sort()
+    mean_distances.sort()
+    max_distances.sort()
+        
+    print("Min:")
     for i in range(10):
-        index=int(float(i)*len(distances)/10)
-        print(i,"/ 10: ",distances[index])
+        index=int(float(i)*len(min_distances)/10)
+        print(i,"/ 10: ",min_distances[index])
     
-    print("10 / 10: ",distances[len(distances)-1])
+    print("10 / 10: ",min_distances[len(min_distances)-1])
+
+    
+    print("\nMean:")
+    for i in range(10):
+        index=int(float(i)*len(mean_distances)/10)
+        print(i,"/ 10: ",mean_distances[index])
+    
+    print("10 / 10: ",mean_distances[len(mean_distances)-1])
+    
+    print("\nMax:")
+    for i in range(10):
+        index=int(float(i)*len(max_distances)/10)
+        print(i,"/ 10: ",max_distances[index])
+    
+    print("10 / 10: ",max_distances[len(max_distances)-1])
