@@ -8,3 +8,4 @@ This directory stores the files of the amira blender rendering framework that ha
 |compositor_renderedobjects.py | PATH_TO_AMIRA/amira_blender_rendering/src/amira_blender_rendering/nodes/compositor_renderedobjects.py |
 |interfaces.py | PATH_TO_AMIRA/amira_blender_rendering/src/amira_blender_rendering/interfaces.py |
 |geometry.py | PATH_TO_AMIRA/amira_blender_rendering/src/amira_blender_rendering/math/geometry.py |
+| rendermanager.py | PATH_TO_AMIRA/amira_blender_rendering/src/amira_blender_rendering/scenes/rendermanager.py |
