@@ -9,10 +9,10 @@
 #SBATCH --partition=dev_single #dev_gpu_4 #dev_multiple
 #Kommentar SBATCH --gres=gpu:1
 
-THREAD_LIMIT=40 #TODO 40
+THREAD_LIMIT=1 #TODO 40
 
 DEBUG_ABRGEN=True
-COMPOSITIONS=500	#TODO 180
+COMPOSITIONS=1	#TODO 180
 IMAGE_COUNT=1 #TODO 4	
 #number of images = COMPOSITIONS x SCENES x VIEWS
 
