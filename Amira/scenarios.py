@@ -35,7 +35,6 @@ class Lights():
         np.random.seed()
         
     def change_lights_properties(self, lights):
-        print("change light poperties")
         self.scenario_2(lights)
         
     def scenario_1(self,lights):    #scenario parts (target, distractor) on floor
