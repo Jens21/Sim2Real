@@ -16,8 +16,8 @@ import argparse
 import bmesh
 
 import sys                                                                                      
-sys.path.append("/home/kit/anthropomatik/yc5412/.conda/envs/ffb6d-venv2/lib/python3.6/site-packages/")     #TODO
-#sys.path.append("/home/user/.local/lib/python3.8/site-packages/")     #TODO
+#sys.path.append("/home/kit/anthropomatik/yc5412/.conda/envs/ffb6d-venv2/lib/python3.6/site-packages/")     #TODO
+sys.path.append("/home/user/.local/lib/python3.8/site-packages/")     #TODO
 sys.path.append(os.getcwd()+"/")
 from tqdm import tqdm    
 import scenarios
